@@ -1,0 +1,42 @@
+﻿@model MastermindModel
+
+<h1>Mastermind</h1>
+<p>Turns remaining: @Model.TurnsRemaining</p>
+<a asp-action="NewGame">New Game</a>
+
+<form asp-controller="Mastermind" asp-action="Guess" method="post">
+    <div>
+        @for (int i = 0; i < Model.Solution.Length; i++)
+        {
+            <input type="number" name="guess" min="1" max="6" />
+        }
+    </div>
+    <input type="submit" value="Make Guess" />
+</form>
+
+<h2>Guess History</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Guess</th>
+            <th>Correct Digits</th>
+            <th>Correct Positions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (int[] guess in Model.GuessHistory)
+        {
+            <tr>
+                <td>
+                    @foreach (int digit in guess)
+                    {
+                        <span>@digit</span>
+                    }
+                </td>
+                <td>@ViewData["CorrectDigits"]</td>
+                <td>@ViewData["CorrectPositions"]</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
